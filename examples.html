@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>remember.js</title>
+
+    <link href="assets/style.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
+    <link href="assets/google-code-prettify/prettify.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <div class="module">
+        <div class="clearfix">
+            <h1 class="brand"><a href="https://github.com/marcusaspin/rememberjs" title="View on Github">remember.js</a></h1>
+            <ul class="nav">
+                <li><a href="index.html">Docs</a></li>
+                <li class="active"><a href="examples.html">Examples</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="module">
+        <h2>Basic examples</h2>
+        <p>Remember.js is made to stay modern and works with all HTML5 elements, whilst retaining support for older browsers too</p>
+        <label>
+            <input type="email" data-remember>
+            <code class="prettyprint pull-right">&lt;input type="email" data-remember&gt;</code>
+        </label>
+        <label>
+            <input type="number" data-remember>
+            <code class="prettyprint pull-right">&lt;input type="number" data-remember&gt;</code>
+        </label>
+        <label>
+            <input type="range" data-remember>
+            <code class="prettyprint pull-right">&lt;input type="range" data-remember&gt;</code>
+        </label>
+        <label>
+            <input type="color" data-remember>
+            <code class="prettyprint pull-right">&lt;input type="color" data-remember&gt;</code>
+        </label>
+        <label>
+            <input type="date" data-remember>
+            <code class="prettyprint pull-right">&lt;input type="date" data-remember&gt;</code>
+        </label>
+        <label>
+            <textarea data-remember></textarea>
+            <code class="prettyprint pull-right">&lt;textarea data-remember&gt;&lt;/textarea&gt;</code>
+        </label>
+    </div>
+    <div class="module">
+        <p>You can set the default value of an element by simply setting it's value on page load</p>
+        <label>
+            <input type="text" value="This is the default value" data-remember>
+            <code class="prettyprint">&lt;input type="text" value="This is the default value" data-remember&gt;</code>
+        </label>
+        <label>
+            <select data-remember>
+                <option>1</option>
+                <option selected>2 (Default)</option>
+                <option>3</option>
+            </select>
+            <code class="prettyprint lead">
+&lt;select data-remember&gt;<br>
+    &lt;option&gt;1&lt;/option&gt;<br>
+    &lt;option selected&gt;2 (Default)&lt;/option&gt;<br>
+    &lt;option&gt;3&lt;/option&gt;<br>
+&lt;/select&gt;</code>
+        </label>
+        <label>
+            <input type="checkbox" checked data-remember>
+            <input type="checkbox" data-remember>
+            <input type="radio" name="radios[]" data-remember>
+            <input type="radio" name="radios[]" data-remember>
+            <input type="radio" name="radios[]" checked data-remember>
+            <code class="prettyprint">
+&lt;input type="checkbox" checked data-remember&gt;<br>
+&lt;input type="checkbox" data-remember&gt;<br>
+&lt;input type="radio" name="radios[]" data-remember&gt;<br>
+&lt;input type="radio" name="radios[]" data-remember&gt;<br>
+&lt;input type="radio" name="radios[]" checked data-remember&gt;</code>
+        </label>
+    </div>
+
+    <div class="module">
+        <h2>Going beyond input and select</h2>
+        <p>Remember.js isn't just made for form elements, using the javascript api you can specify any element to be saved.</p>
+        <p>Here's a very basic example using a list of items specified by the user, but this can be expanded on greatly.</p>
+        <div class="module">
+            <h3>Shopping list</h3>
+        <ul id="list"><li>Milk</li><li>Bread</li></ul>
+        <a class="btn" id="list-add">Add item</a> <a class="btn btn-danger" id="list-remove">Remove last item</a>
+    </div>
+        <p>The shopping list is registered to remember.js using the following code:</p>
+        <pre class="prettyprint lead">
+var options = {
+    get: function(){ return this.element.innerHTML },
+    set: function(val){ return this.element.innerHTML = val },
+    reset: function(){ return this.element.innerHTML = this.def },
+    def: "&lt;li&gt;Milk&lt;/li&gt;&lt;li&gt;Bread&lt;/li&gt;"
+};
+var list = document.getElementById("list");
+new remember.Control(list, options);</pre>
+    </div>
+
+    <div class="module">
+        <h2>Autosaving and more</h2>
+        <p>Remember.js also contains a method called <code>remember.change()</code> that allows you to specify a function to call whenever any element is changed (even elements that don't support <code>onchange()</code>)</p>
+        <p>A few uses of this are shown below.</p>
+        <h3>&middot; Magic save button</h3>
+        <p>The following code only shows the save button once something has changed.</p>
+        <pre class="prettyprint lead">
+remember.change(function(){
+    document.getElementById("save").style.display = "";
+});</pre>
+        <a class="btn" id="enable-savebutton">Enable magic save button</a>
+        <h3>&middot; Autosaving</h3>
+        <p>This code enables autosaving. ie Whenever an element is changed, it's value is saved instantly.</p>
+        <pre class="prettyprint lead">
+remember.change(remember.save);</pre>
+        <a class="btn" id="enable-autosave">Enable autosaving</a>
+    </div>
+</div>
+<div class="controls-fixed clearfix">
+    <div class="container">
+        <a class="btn btn-danger pull-left" id="reset">Reset</a>
+        <div class="pull-right">
+            <a class="btn" id="cancel">Cancel</a>
+            <a class="btn" id="save">Save changes</a>
+        </div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="assets/google-code-prettify/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">prettyPrint();</script>
+
+<!--[if lte IE 7]><script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js" type="text/javascript"></script><![endif]-->
+<script src="remember.js" type="text/javascript"></script>
+<script>
+
+    $(document).ready(function(){
+        var listAdd = function(){
+            var name = prompt("Enter a name for the item", "");
+            if(!name) return;
+            $("#list").append("<li>"+ name +"</li>");
+        },  listRemove = function(){
+            $("#list").find("li:last-child()").remove();
+        };
+
+        // Add list control to remember.js
+        var options = {
+            get: function(){ return this.element.innerHTML },
+            set: function(val){ return this.element.innerHTML = val },
+            reset: function(){ return this.element.innerHTML = this.def },
+            def: "<li>Milk</li><li>Bread</li>"
+        };
+        var list = document.getElementById("list");
+        new remember.Control(list, options);
+
+        // Enable magic save button
+        $("#enable-savebutton").on("click", function(){
+            $("#save").fadeOut();
+            $("#cancel, #save").fadeOut().on("click", function(){
+                $("#save").fadeOut();
+                $("#cancel").fadeOut();
+            });
+            remember.change(function(){
+                $("#save").fadeIn();
+                $("#cancel").fadeIn();
+            });
+        });
+        // Enable autosaving
+        $("#enable-autosave").on("click", function(){
+            remember.change(remember.save);
+        });
+
+        $("#save").on("click", remember.save);
+        $("#cancel").on("click", remember.load);
+        $("#reset").on("click", remember.reset);
+        $("#list-add").on("click", listAdd);
+        $("#list-remove").on("click", listRemove);
+    });
+</script>
+</body>
+</html>

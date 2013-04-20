@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>remember.js</title>
+
+    <link href="assets/style.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet" type="text/css">
+    <link href="assets/google-code-prettify/prettify.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="module">
+            <div class="clearfix">
+                <h1 class="brand"><a href="https://github.com/marcusaspin/rememberjs" title="View on Github">remember.js</a></h1>
+                <ul class="nav">
+                    <li class="active"><a href="index.html">Docs</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                </ul>
+            </div>
+            <p>Remember.js is a lightweight but flexible javascript library to help you save user settings and data between sessions.</p>
+            <p>It was born out of an upcoming news reader project where I found myself continuously hassled by errors and incompatibilities when saving user settings on the client-side. I decided it was time to create a library that did everything I needed and more. So here you have it, remember.js</p>
+        </div>
+        <div class="module">
+            <h2>Usage</h2>
+            <h3>&middot; via HTML</h3>
+            <p class="lead">To remember an elements value, simply add the <code>data-remember</code> attribute</p>
+            <p>For example:</p>
+            <pre class="prettyprint lead">
+&lt;input type='text' data-remember&gt;
+&lt;input type='checkbox' data-remember&gt;
+&lt;select data-remember&gt;
+    &lt;option&gt;Option 1&lt;/option&gt;
+    &lt;option&gt;Option 2&lt;/option&gt;
+    &lt;option&gt;Option 3&lt;/option&gt;
+&lt;select&gt;</pre>
+            <h3>&middot; via Javascript</h3>
+            <p class="lead">To remember a value using javascript, you should call</p>
+            <pre class="prettyprint lead">
+var myElement = document.getElementById("#myElement");
+new remember.Control(myElement, options);</pre>
+            <p class="lead">with the arguments:</p>
+            <ul>
+                <li><code>myElement</code> &middot; The HTMLElement to remember the value of.</li>
+                <li><code>options</code> &middot; An optional Object with the following attributes:
+                    <ul>
+                        <li>
+                            <code>get</code> &middot; A function that will return the value to be saved of the element stored in <code>this.element</code>.<br>
+                            <div class="note">Example for text input: <code class="prettyprint">function(){ return this.element.value }</code></div>
+                            <div class="note">Example for checkbox: <code class="prettyprint">function(){ return this.element.checked }</code></div>
+                            <div class="note">Example for select: <code class="prettyprint">function(){ return this.element.selectedIndex }</code></div>
+                        </li>
+                        <li>
+                            <code>set</code> &middot; A function to set the value of the element.<br>
+                            <div class="note">Example for text input: <code class="prettyprint">function(val){ return this.element.value = val }</code></div>
+                            <div class="note">Example for select: <code class="prettyprint">function(val){ return this.element.selectedIndex = val }</code></div>
+                        </li>
+                        <li>
+                            <code>reset</code> &middot; A function used to reset the value of the element to it's default. The default value is stored in <code>this.def</code><br>
+                            <div class="note">Example for text input: <code class="prettyprint">function(){ return this.element.value = "This is the default value" }</code></div>
+                            <div class="note">Example for select: <code class="prettyprint">function(){ return this.element.selectedIndex = this.def }</code></div>
+                        </li>
+                        <li>
+                            <code>def</code> &middot; The default value of the element, this will be used used by the reset function<br>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p>Once all the elements are registered, use </p>
+            <pre class="prettyprint lead">
+remember.save();
+remember.load();
+remember.reset();</pre>
+            <p>to save, load and reset the elements values respectively.</p>
+
+            <p>For examples of correct usage and some extra features, check out the <a href="examples.html">Demo page</a>.</p>
+        </div>
+        <div class="module">
+            <h2>Download</h2>
+            <p>To use remember.js, include the following file just before your closing body tag</p>
+            <div class="center">
+                <a class="btn" href="remember.js">remember.js<br><small>12.4 KB</small></a> <a class="btn" href="remember.min.js">remember.min.js<br><small>4.5 KB</small></a>
+                <div class="note">Note: To support IE7 and below you must also include <a href="https://github.com/douglascrockford/JSON-js">json2.js</a></div>
+            </div>
+        </div>
+        <div class="module">
+            <h2>Contribute</h2>
+            <p>View the project on <a href="https://github.com/marcusaspin/rememberjs" title="View on Github">Github</a>. Feel free to fork or contribute!</p>
+        </div>
+    </div>
+    <script src="assets/google-code-prettify/prettify.js" type="text/javascript"></script>
+    <script type="text/javascript">prettyPrint();</script>
+</body>
+</html>
